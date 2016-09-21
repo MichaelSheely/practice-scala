@@ -9,9 +9,9 @@ package exercises
 
 /*
  * Here, we import the features of the testing library that we're going to use.
- * 
+ *
  * These features use the basic testing style that comes with ScalaTest, but
- * there are many, many more styles (some of which we'll use in other code). 
+ * there are many, many more styles (some of which we'll use in other code).
  * For more information about the ScalaTest library, see:
  * 		 http://www.scalatest.org/user_guide
  */
