@@ -8,6 +8,8 @@ object Fibonacci {
    *    fib(2) = 1
    *    fib(n) = fib(n-1) + fib(n-2)
    */
-  def fib(n: Int): Int = 0
-
+  def fib(n: Int): Int = {
+    val base_case = n < 2
+    base_case ? 1 : fib(n-1) + fib(n-2)
+  }
 }
