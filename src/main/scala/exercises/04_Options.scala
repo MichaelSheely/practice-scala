@@ -24,26 +24,49 @@ object Options {
    * -- the amount of people in the room (filled: Some("10"), empty: None)
    * -- the room is not available (Some("locked"))
    */
-  val rooms = Map(1 -> Some("12"), 2 -> None, 3 -> Some("locked"), 4 -> Some("14"), 5 -> Some("8"), 6 -> Some("locked"))
+  val rooms = Map(1 -> Some("12"), 2 -> None, 3 -> Some("locked"),
+                  4 -> Some("14"), 5 -> Some("8"), 6 -> Some("locked"))
   
   /**
-   * Implement the room state method that should return the state of a room as a String as follows:
+   * Implement the room state method that should return the state of a room
+   * as a String as follows:
    * - filled: return total people:     E.g: Some("12") is "12"
    * - locked: return "not available"   E.g. Some("locked") is "not available"
    * - empty:  return "empty"	        E.g. None is "empty"
    * - does not exist: 					"not existing"
    */
   def roomState(rooms: Map[Int, Option[String]], room: Int): String = {
-    error("Fix me")
+    val room_state = rooms.get(room) 
+    if (!room_state.isDefined) {
+      "not existing"
+    } else if (room_state.get == None) {
+      "empty"
+    } else if (room_state.get.get == "locked") {
+      "not available"
+    } else {
+      room_state.get.get
+    }
+  }
+
+  /**
+   * Given a room number, extracts either:
+   *   None (if there are no people in the room)
+   *   Some() number of people in the room
+   */
+  def peopleInRoom(rooms: Map[Int, Option[String]], room: Int): Option[Int] = {
+    roomState(rooms, room) match {
+      case "not existing" => None
+      case "empty" => None
+      case "not available" => None
+      case x => Some(x.toInt)
+    }
   }
 
   /**
    * Calculate the total amount of people in all rooms
-	 *
-   * Hint: define a helper function that computes a room's occupancy
-   * to convert a possible numeric String (e.g. Some("12")) to an integer
    */
   def totalPeopleInRooms(rooms: Map[Int, Option[String]]): Int = {
-    error("Fix me")
+    //rooms.keys.map(roomNumToOccupancy(rooms, _: Int)).foldLeft(0)(_ + _)
+    rooms.keys.map(peopleInRoom(rooms, _: Int).getOrElse(0)).foldLeft(0)(_ + _)
   }
 }
