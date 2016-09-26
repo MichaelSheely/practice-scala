@@ -31,14 +31,14 @@ object Collections {
    * 
    */
   def firstElementInList[T](l: List[T]): T = {
-    error("fix me")
+    l.head
   }
 
   /**
    * Get the sum of all the elements in the list, e.g. sumOfList(List(1,2,3)) = 6.
    */
   def sumOfList(l: List[Int]): Int = {
-    error("fix me")
+    l.foldLeft(0)(_ + _)
   }
 
   /**
@@ -51,7 +51,7 @@ object Collections {
    *  - ... etc
    */
   def lastElementInList[T](l: List[T]): T = {
-    error("fix me")
+    l.foldLeft(l.head)((t : T, t2 : T) => t2)
   }
 
    /**
@@ -65,7 +65,10 @@ object Collections {
    *  - ... etc
    */
   def nthElementInList[T](n: Int, l: List[T]): T = {
-    error("fix me")
+    n match {
+      case 0 => l.head
+      case q => nthElementInList(q - 1, l.tail)
+    }
   }
 
   /**
@@ -79,7 +82,7 @@ object Collections {
    *  - ... etc 
    */
   def concatLists[T](l1: List[T], l2: List[T]): List[T] = {
-    error("fix me")
+    l1 ++ l2
   }
 
   /**
@@ -92,7 +95,7 @@ object Collections {
    * 
    */
   def sortList[T <% Ordered[T]](list: List[T]): List[T] = {
-    error("fix me")
+    list.sorted
   }
 
   /**
@@ -103,7 +106,10 @@ object Collections {
    * to implement in your own free-style way.
    */
   def elementExists[T](l: List[T], e: T): Boolean = {
-    error("fix me")
+    l match {
+      case List() => false
+      case x :: xs => (x == e) || elementExists(xs, e)
+    }
   }
 
   /**
@@ -114,7 +120,7 @@ object Collections {
    * pattern match or some other method.
    */
   def oddElements(iList: List[Int]): List[Int] = {
-    error("fix me")
+    iList.filter((x : Int) => x % 2 == 1)
   }
 
   /**
@@ -130,7 +136,10 @@ object Collections {
    * neat way using recursion. 
    */
   def tails[T](l: List[T]): List[List[T]] = {
-    error("fix me")
+    l match {
+      case List() => List(l)
+      case _ => (l :: tails(l.tail))
+    }
   }
   
   /**
@@ -139,7 +148,7 @@ object Collections {
    * As usual, various ways exist: pattern matching, folding, ...
    */
   def maxElementInList(l: List[Int]): Int = {
-    error("fix me")
+    l.foldLeft(0)((x : Int, y: Int) => math.max(x, y))
   }
 
   /**
@@ -147,7 +156,13 @@ object Collections {
    * of the two list
    */
   def sumOfTwo(l1: List[Int], l2: List[Int]): List[Int] = {
-    error("fix me")
+    if (l1.isEmpty) l2 else if (l2.isEmpty) l1 else
+    (l1 zip l2).map((tup : (Int, Int)) => tup._1 + tup._2 )
+  }
+
+  def p(l: List[Int]) = {
+    println(l)
+    l
   }
 
   /**
@@ -155,40 +170,31 @@ object Collections {
    * method above
    */
   def sumOfMany(l: List[Int]*): List[Int] = {
-    error("fix me")
+    l.foldLeft(List[Int]())(sumOfTwo)
   }
 
   case class Person(age: Int, firstName: String, lastName: String)
 
   /**
+    * Takes a list of people and returns a list of their first names, sorted in
+    * ascending order by their ages.
+    */
+  def getFirstNamesSortedByAge(persons: List[Person]): List[String] = {
+    persons.sortBy(_.age).map((p: Person) => p.firstName)
+  }
+
+  /**
    * The following method is implemented in the most inelegant way we could think of.
    * The idea is to rewrite the method into more functional style. 
+   *
+   * After overhaul, it transforms a list of people into a list where the first
+   * element is a list of the valid young names and the second is a list of the
+   * valid old names.
+   * Both sublists are sorted according to the age of their persons
    */
   def separateTheYoungFromTheOld(persons: List[Person]): List[List[String]] = {
-    var youngins: ListBuffer[Person] = new ListBuffer[Person]()
-    var elders: ListBuffer[Person] = new ListBuffer[Person]()
-    var validYoungNames: ListBuffer[String] = new ListBuffer[String]()
-    var validOldNames: ListBuffer[String] = new ListBuffer[String]()
-
-    for (person <- persons) {
-        if (person.age < 18) {
-          youngins += person
-        } else {
-          elders += person
-        }
-    }
-
-    var sortedYoung = youngins.toList.sortBy(_.age)
-    var sortedOld = elders.toList.sortBy(_.age)
-
-    for (young <- sortedYoung) {
-      validYoungNames += young.firstName
-    }
-    for (old <- sortedOld) {
-      validOldNames += old.firstName
-    }
-    
-    List(validYoungNames.toList, validOldNames.toList)
+    val (young, elders) = persons.partition((p: Person) => p.age < 18)
+    List(young, elders).map(getFirstNamesSortedByAge)
   }
 }
 
