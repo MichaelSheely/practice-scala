@@ -11,7 +11,7 @@ scala-thoughts.md Some possible topics include:
 
 ### Questions
 
-1. What's easy to do in Scala? What's not?
+#### 1. What's easy to do in Scala? What's not?
 
 It is easy to write code that feels like python's functional programming.
 It was very easy to chain methods and compose different chunks of code.
@@ -26,7 +26,7 @@ and zero argument vs no argument).
 
 ---
 
-1. What is/are your favorite language design choice(s) that the designers of
+#### 2. What is/are your favorite language design choice(s) that the designers of
 Scala made? Why?
 
 I really like how Scala's language designers did not seem to be forcing their
@@ -48,7 +48,7 @@ failed, and having to debug the cause.
 
 ---
 
-1. What is/are your least favorite language design choice(s)?
+#### 3. What is/are your least favorite language design choice(s)?
 Why? And why do you think the designers made that / those choice(s)?
 
 I don't like the fact that every function and piece of data has to be inside
@@ -82,7 +82,7 @@ the length of the tuple it was being applied to.
 
 ---
 
-1. What Scala features would you like to learn more about?
+#### 4. What Scala features would you like to learn more about?
 
 I definitely want to learn more about traits.  It seems that they are similar
 to generics or templates, but it also seems that there could be a number of
